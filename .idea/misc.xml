@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/compose-model-1660474882740.xml" value="0.6932773109243697" />
+        <entry key="../../../../layout/compose-model-1660474924710.xml" value="0.75" />
+        <entry key="../../../../layout/compose-model-1660475623855.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1660475687746.xml" value="0.6875" />
+        <entry key="../../../../layout/compose-model-1660476024649.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1660563380083.xml" value="0.9591078066914498" />
+        <entry key="../../../../layout/compose-model-1660573166413.xml" value="0.9591078066914498" />
+        <entry key="../../../../layout/compose-model-1660650077339.xml" value="0.6133828996282528" />
+        <entry key="../../../../layout/compose-model-1660650256063.xml" value="0.11392140468227424" />
+        <entry key="../../../../layout/compose-model-1660663469008.xml" value="0.6765799256505576" />
+        <entry key="../../../../layout/compose-model-1660663769823.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1660663815428.xml" value="0.27870370370370373" />
+        <entry key="../../../../layout/compose-model-1660681850702.xml" value="0.25" />
+        <entry key="../../../../layout/compose-model-1660691602431.xml" value="0.27870370370370373" />
+        <entry key="../../../../layout/compose-model-1660734731354.xml" value="0.27870370370370373" />
+        <entry key="../../Developer/ExCompose/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
