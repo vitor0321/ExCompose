@@ -1,12 +1,17 @@
-package com.example.excompose.ui.theme
+package com.example.excompose.presentation.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
@@ -19,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun ComposeBasisTheme(
+fun ArsenalBasicTheme(
     isDynamic: Boolean = true,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
@@ -67,7 +72,7 @@ object ArsenalThemeExtended {
 @Preview
 @Composable
 fun LightColorsPreview() {
-    ComposeBasisTheme(useDarkTheme = false) {
+    ArsenalBasicTheme(useDarkTheme = false) {
         ColorList()
     }
 }
@@ -75,7 +80,7 @@ fun LightColorsPreview() {
 @Preview
 @Composable
 fun DarkColorsPreview() {
-    ComposeBasisTheme(useDarkTheme = true) {
+    ArsenalBasicTheme(useDarkTheme = true) {
         ColorList()
     }
 }

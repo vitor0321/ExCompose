@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">ExCompose</string>
     <string name="wellcome">Wellcome</string>
+    <string name="template">Template</string>
+    <string name="ok">OK</string>
+    <string name="maybe">Talvez</string>
+    <string name="cancel">Cancel</string>
+    <string name="carregando">Carregando...</string>
+    <string name="loading">loading</string>
+    <string name="exit_loading">Sair do loading</string>
 </resources>
