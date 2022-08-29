@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.excompose.presentation.navigation.RootNavigationGraph
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
 import com.example.excompose.presentation.ui.view.WelcomeView
 import com.example.excompose.presentation.viewModel.ObserveStateViewModel
@@ -20,7 +22,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ArsenalBasicTheme {
-                WelcomeView(this, viewModel)
+//                WelcomeView(this, viewModel)
+                ComplexNavigationGraph()
             }
         }
     }
@@ -33,5 +36,12 @@ fun MainPreview() {
         WelcomeView(LocalContext.current, ObserveStateViewModel().apply {
             loadingStateFlow.value = false
         })
+    }
+}
+
+@Composable
+private fun ComplexNavigationGraph() {
+    ArsenalBasicTheme {
+        RootNavigationGraph(navController = rememberNavController())
     }
 }

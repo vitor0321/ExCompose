@@ -122,7 +122,7 @@ object AppCustomTypography {
 
     val h1: TextStyle
         @Composable
-        get() = MaterialTheme.typography.titleMedium.copy(
+        get() = MaterialTheme.typography.titleLarge.copy(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontWeight = FontWeight.Bold,
         )
