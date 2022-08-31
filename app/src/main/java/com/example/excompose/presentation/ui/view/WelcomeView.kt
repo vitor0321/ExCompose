@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.excompose.R
 import com.example.excompose.presentation.ui.components.ArsenalButtonRow
 import com.example.excompose.presentation.ui.components.ArsenalIconImage
@@ -22,7 +23,10 @@ import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
 import com.example.excompose.presentation.viewModel.ObserveStateViewModel
 
 @Composable
-fun WelcomeView(context: Context, viewModel: ObserveStateViewModel) {
+fun WelcomeView(
+    context: Context,
+    viewModel: ObserveStateViewModel,
+) {
     val action = { Toast.makeText(context, "Olha isso!", Toast.LENGTH_SHORT).show() }
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -64,7 +68,7 @@ fun WelcomeView(context: Context, viewModel: ObserveStateViewModel) {
 @Composable
 fun WelcomeViewLightPreview() {
     ArsenalBasicTheme(useDarkTheme = false) {
-        WelcomeView(LocalContext.current,ObserveStateViewModel().apply {
+        WelcomeView(LocalContext.current, ObserveStateViewModel().apply {
             loadingStateFlow.value = false
         })
     }
@@ -74,7 +78,7 @@ fun WelcomeViewLightPreview() {
 @Composable
 fun WelcomeViewDarkPreview() {
     ArsenalBasicTheme(useDarkTheme = true) {
-        WelcomeView(LocalContext.current,ObserveStateViewModel().apply {
+        WelcomeView(LocalContext.current, ObserveStateViewModel().apply {
             loadingStateFlow.value = true
         })
     }

@@ -1,4 +1,4 @@
-package com.example.excompose.presentation.navigation
+package com.example.excompose.presentation.ui.view
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
@@ -19,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.excompose.presentation.navigation.HomeNavGraph
 import com.example.excompose.presentation.ui.components.BottomBar
+import com.example.excompose.presentation.ui.components.FavoriteButton
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
 import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
 
@@ -63,22 +65,18 @@ fun LoginContent(
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
     onForgotClick: () -> Unit,
+    onWelcomeClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .clickable { onLoginClick() },
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            modifier = Modifier
-                .clickable { onLoginClick() }
-                .padding(40.dp),
-            text = "Login",
-            fontSize = ArsenalThemeExtended.typography.h1.fontSize,
-            fontWeight = FontWeight.Bold
-        )
+        FavoriteButton(
+            text = "Login"
+        ) { onLoginClick() }
+
         Text(
             modifier = Modifier
                 .clickable { onSignUpClick() }
@@ -95,6 +93,14 @@ fun LoginContent(
             fontSize = ArsenalThemeExtended.typography.h1.fontSize,
             fontWeight = FontWeight.Bold
         )
+        Text(
+            modifier = Modifier
+                .clickable { onWelcomeClick() }
+                .padding(40.dp),
+            text = "Welcome",
+            fontSize = ArsenalThemeExtended.typography.h1.fontSize,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -102,14 +108,16 @@ fun LoginContent(
 @Composable
 fun LoginContentPreview() {
     ArsenalBasicTheme(useDarkTheme = true) {
-        LoginContent({}, {}, {})
+        LoginContent({}, {}, {}, {})
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeViewContent(navController: NavHostController = rememberNavController()) {
+fun HomeViewContent(
+    navController: NavHostController = rememberNavController()
+) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {

@@ -5,6 +5,7 @@ object AuthGraph{
     const val LOGIN = "login"
     const val SIGN_UP = "sign_up"
     const val FORGOT_PASSWORD = "forgot_password"
+    const val WELCOME = "welcome"
 }
 
 object DetailsGraph{
@@ -26,8 +27,8 @@ object RootGraph {
 }
 
 object AppGraph{
-    val auth = AuthGraph
-    val details = DetailsGraph
-    val home = HomeGraph
     val initial = RootGraph
+    val auth = AuthGraph
+    val home = HomeGraph
+    val details = DetailsGraph
 }

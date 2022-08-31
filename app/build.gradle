@@ -89,7 +89,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:$android_systembars_ui_controler"
 
     // ICON EXTENDED
-    // implementation "androidx.compose.material:material-icons-extended:$androidx_icons_extended"
+//     implementation "androidx.compose.material:material-icons-extended:$androidx_icons_extended"
 
     // COMPOSE NAVIGATION
     implementation "androidx.navigation:navigation-compose:$compose_navigation"

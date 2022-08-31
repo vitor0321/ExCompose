@@ -7,6 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
+import com.example.excompose.presentation.ui.view.HomeViewContent
+import com.example.excompose.presentation.ui.view.LoginContent
+import com.example.excompose.presentation.ui.view.ViewContent
 
 @Composable
 fun RootNavigationGraph(navController: NavHostController) {
@@ -39,15 +42,27 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
                     },
                     onForgotClick = {
                         navController.navigate(AppGraph.auth.FORGOT_PASSWORD)
+                    },
+                    onWelcomeClick = {
+                        navController.navigate(AppGraph.auth.WELCOME)
                     }
                 )
             }
         }
         composable(route = AppGraph.auth.SIGN_UP) {
-            ViewContent(name = "SIGN UP") {}
+            ViewContent(name = "SIGN UP TO LOGIN") {
+                navController.navigate(AppGraph.auth.LOGIN)
+            }
         }
         composable(route = AppGraph.auth.FORGOT_PASSWORD) {
-            ViewContent(name = "FORGOT PASSWORD") {}
+            ViewContent(name = "FORGOT PASSWORD TO LOGIN") {
+                navController.navigate(AppGraph.auth.LOGIN)
+            }
+        }
+        composable(route = AppGraph.auth.WELCOME) {
+            ViewContent(name = "WELCOME TO LOGIN") {
+                navController.navigate(AppGraph.auth.LOGIN)
+            }
         }
     }
 }
@@ -61,7 +76,7 @@ fun HomeNavGraph(navController: NavHostController) {
     ) {
         composable(route = AppGraph.home.HOME) {
             ViewContent(
-                name = "Home",
+                name = "Details",
                 onClick = { navController.navigate(AppGraph.details.ROOT) }
             )
         }

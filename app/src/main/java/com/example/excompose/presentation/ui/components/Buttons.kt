@@ -1,6 +1,7 @@
 package com.example.excompose.presentation.ui.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,10 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.excompose.R
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
+import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
 
 @Composable
-fun FavoriteButton(onClickFavorite: () -> Unit) {
-    androidx.compose.material3.Button(
+fun FavoriteButton(text: String, onClickFavorite: () -> Unit) {
+    Button(
         onClick = onClickFavorite,
         contentPadding = PaddingValues(
             start = 20.dp,
@@ -37,12 +40,15 @@ fun FavoriteButton(onClickFavorite: () -> Unit) {
         ),
     ) {
         Icon(
-            Icons.Filled.Favorite,
+            Icons
+                .Filled.Favorite,
+            tint = MaterialTheme.colorScheme.onPrimary,
             contentDescription = "Favorite",
-            modifier = Modifier.size(ButtonDefaults.IconSize)
+            modifier = Modifier
+                .size(ButtonDefaults.IconSize)
         )
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Text("Like", color = Color.White)
+        Text(text, color = MaterialTheme.colorScheme.onPrimary)
     }
 }
 
@@ -50,7 +56,7 @@ fun FavoriteButton(onClickFavorite: () -> Unit) {
 @Preview
 fun FavoriteButtonLightPreview() {
     ArsenalBasicTheme(useDarkTheme = false) {
-        FavoriteButton{}
+        FavoriteButton("Like"){}
     }
 }
 
@@ -58,7 +64,7 @@ fun FavoriteButtonLightPreview() {
 @Preview
 fun FavoriteButtonDarkPreview() {
     ArsenalBasicTheme(useDarkTheme = true) {
-        FavoriteButton{}
+        FavoriteButton("Like"){}
     }
 }
 
