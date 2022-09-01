@@ -13,6 +13,7 @@
     <color name="light_tertiaryContainer">#ABEDFF</color>
     <color name="light_onTertiaryContainer">#001F26</color>
     <color name="light_error">#BA1A1A</color>
+    <color name="light_seed">#FF9800</color>
     <color name="light_errorContainer">#FFDAD6</color>
     <color name="light_onError">#FFFFFF</color>
     <color name="light_onErrorContainer">#410002</color>
@@ -43,6 +44,7 @@
     <color name="dark_tertiaryContainer">#004E5C</color>
     <color name="dark_onTertiaryContainer">#ABEDFF</color>
     <color name="dark_error">#FFB4AB</color>
+    <color name="dark_seed">#FF9800</color>
     <color name="dark_errorContainer">#93000A</color>
     <color name="dark_onError">#690005</color>
     <color name="dark_onErrorContainer">#FFDAD6</color>

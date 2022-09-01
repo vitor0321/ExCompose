@@ -137,13 +137,13 @@ object AppCustomTypography {
     val body1: TextStyle
         @Composable
         get() = MaterialTheme.typography.bodyMedium.copy(
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
     val body2: TextStyle
         @Composable
         get() = MaterialTheme.typography.bodySmall.copy(
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 }
 
