@@ -1,10 +1,17 @@
 package com.example.excompose.presentation.ui.components
 
-import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +31,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,6 +41,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,52 +54,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.excompose.R
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
 import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 
-data class Item(
-    var id: Int = 1,
-    var title: String = "Titulo",
-    var activated: String = "Aug. 2022",
-    var lastLogin: String = "Sept. 2022",
-    var serial: String = "AAAA"
-)
-
-class SettingsViewModel : ViewModel() {
-    val items = MutableStateFlow<MutableList<Item>>(mutableListOf())
-    val registerId = MutableStateFlow("")
-
-    fun setItems(item: List<Item>) {
-        viewModelScope.launch {
-            this@SettingsViewModel.items.emit(items as MutableList<Item>)
-        }
-    }
-
-    fun navigationTo(destinationId: Int){
-        Log.d("TESTANDO", "NAVEGUE PARA O DESTINO: $destinationId")
-    }
-
-    fun removeItem(item: Item) {
-        items.value = items.value.filter { it != item }.toMutableList()
-    }
-
-    fun getLastItemId(): Int = items.value.last().id
-
-    fun setRegisterId(id: String) {
-        viewModelScope.launch {
-            registerId.emit(id)
-        }
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
+fun SettingsScreenAnimated(viewModel: SettingsViewModel) {
     val items by viewModel.items.collectAsState()
     val registerID by viewModel.registerId.collectAsState()
 
@@ -121,7 +93,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
                     )
                 }
                 items(items = items) { item ->
-                    SettingsItem(item) { viewModel.removeItem(item) }
+                    SettingsItemAnimated(item) { viewModel.navigationTo(item.id) }
                     Spacer(modifier = Modifier.height(12.dp))
                     if (viewModel.getLastItemId() == item.id && registerID.isNotEmpty()) {
                         RegisterId(registerID)
@@ -160,10 +132,13 @@ private fun RegisterId(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsItem(
+fun SettingsItemAnimated(
     item: Item,
     onItemClicked: () -> Unit = {}
 ) {
+
+    val expanded = remember { mutableStateOf(false) }
+
     Card(
         shape = RoundedCornerShape(0.dp),
         border = BorderStroke(1.dp, colorResource(R.color.light_seed)),
@@ -192,70 +167,65 @@ fun SettingsItem(
 
             Spacer(modifier = Modifier.width(4.dp))
 
-            Column(modifier = Modifier.weight(1F)) {
+            Column(modifier = Modifier
+                .weight(1F)
+                .clickable { onItemClicked() }
+            ) {
                 Text(
                     text = item.title,
                     style = ArsenalThemeExtended.typography.h2
                 )
-                Text(
-                    text = item.activated,
-                    style = ArsenalThemeExtended.typography.body1
-                )
-                Text(
-                    text = item.lastLogin,
-                    style = ArsenalThemeExtended.typography.body2
-                )
+                AnimatedVisibility(visible = expanded.value){
+                    Column {
+                        Text(
+                            text = item.activated,
+                            style = ArsenalThemeExtended.typography.body1
+                        )
+                        Text(
+                            text = item.lastLogin,
+                            style = ArsenalThemeExtended.typography.body2
+                        )
+                    }
+                }
+
+//                AnimatedVisibility(
+//                    visible = expanded.value,
+//                    enter = fadeIn(animationSpec = tween(250)) +
+//                            expandVertically(
+//                                animationSpec = tween( 500,
+//                                easing = FastOutLinearInEasing)
+//                            ),
+//                    exit = fadeOut(animationSpec = tween(500)) +
+//                            shrinkVertically(
+//                                animationSpec = tween(500,
+//                                easing = FastOutLinearInEasing)
+//                            )
+//                ){
+//                    Column {
+//                        Text(
+//                            text = item.activated,
+//                            style = ArsenalThemeExtended.typography.body1
+//                        )
+//                        Text(
+//                            text = item.lastLogin,
+//                            style = ArsenalThemeExtended.typography.body2
+//                        )
+//                    }
+//                }
             }
 
             Box(modifier = Modifier.width(50.dp)) {
                 OutlinedButton(
-                    onClick = { onItemClicked() },
+                    onClick = { expanded.value = !expanded.value },
                     modifier = Modifier.padding(8.dp),
                     shape = RoundedCornerShape(2.dp),
                     contentPadding = PaddingValues(0.dp)
                 ) {
                     Icon(
-                        Icons.Outlined.Delete,
+                        imageVector = if (expanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                         modifier = Modifier.fillMaxSize(),
-                        contentDescription = "deletar",
+                        contentDescription = "esconder ou mostra",
                         tint = MaterialTheme.colorScheme.tertiary
-                    )
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SettingsEmptyItem() {
-    Box(modifier = Modifier.padding(12.dp)) {
-        Column(Modifier.background(colorResource(R.color.light_seed))) {
-            Card(
-                shape = RoundedCornerShape(0.dp),
-                border = BorderStroke(4.dp, colorResource(R.color.light_seed)),
-                modifier = Modifier.padding(start = 12.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(ArsenalThemeExtended.colors.snowWhite)
-                ) {
-                    Box {
-                        Image(
-                            modifier = Modifier
-                                .padding(start = 8.dp, top = 20.dp, end = 8.dp, bottom = 20.dp)
-                                .align(Alignment.TopCenter),
-                            painter = painterResource(R.drawable.ic_warning),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(color = colorResource(R.color.light_seed))
-                        )
-                    }
-                    Text(
-                        modifier = Modifier
-                            .padding(start = 20.dp, top = 20.dp, bottom = 20.dp, end = 32.dp),
-                        text = "A nossa lista está vazia",
-                        style = ArsenalThemeExtended.typography.body1
                     )
                 }
             }
@@ -279,7 +249,7 @@ private fun RegisterIdText(textString: String) {
 
 @Preview
 @Composable
-fun PreviewSettingsEmptyItem() {
+fun PreviewSettingsEmptyItemAnimated() {
     ArsenalBasicTheme {
         SettingsEmptyItem()
     }
@@ -287,7 +257,7 @@ fun PreviewSettingsEmptyItem() {
 
 @Preview
 @Composable
-fun PreviewEmptySettingsScreen() {
+fun PreviewEmptySettingsScreenAnimated() {
     ArsenalBasicTheme {
         val viewModel = SettingsViewModel()
         SettingsScreen(viewModel)
@@ -296,7 +266,7 @@ fun PreviewEmptySettingsScreen() {
 
 @Preview
 @Composable
-fun PreviewDarkSettingsEmptyItem() {
+fun PreviewDarkSettingsEmptyItemAnimated() {
     ArsenalBasicTheme(useDarkTheme = true) {
         SettingsEmptyItem()
     }
@@ -304,7 +274,7 @@ fun PreviewDarkSettingsEmptyItem() {
 
 @Preview
 @Composable
-fun PreviewDarkEmptySettingsScreen() {
+fun PreviewDarkEmptySettingsScreenAnimated() {
     ArsenalBasicTheme(useDarkTheme = false) {
         val viewModel = SettingsViewModel()
         SettingsScreen(viewModel)
@@ -313,7 +283,7 @@ fun PreviewDarkEmptySettingsScreen() {
 
 @Preview
 @Composable
-fun PreviewSettingsScreen() {
+fun PreviewSettingsScreenAnimated() {
     ArsenalBasicTheme {
         val viewModel = SettingsViewModel().apply {
             items.value = mutableListOf(Item(1, "R123456", "Aug. 2022", "Sept. 2022", "AAAAA"))
@@ -324,7 +294,7 @@ fun PreviewSettingsScreen() {
 
 @Preview
 @Composable
-fun PreviewMultiItemsSettingsScreen() {
+fun PreviewMultiItemsSettingsScreenAnimated() {
     ArsenalBasicTheme {
         val viewModel = SettingsViewModel().apply {
             items.value = mutableListOf(
@@ -339,7 +309,7 @@ fun PreviewMultiItemsSettingsScreen() {
 
 @Preview
 @Composable
-fun PreviewDarkSettingsScreen() {
+fun PreviewDarkSettingsScreenAnimated() {
     ArsenalBasicTheme(useDarkTheme = true) {
         val viewModel = SettingsViewModel().apply {
             items.value = mutableListOf(Item(1, "Meu Item", "Aug. 2022", "Sept. 2022", "AAAAA"))
@@ -350,7 +320,7 @@ fun PreviewDarkSettingsScreen() {
 
 @Preview
 @Composable
-fun PreviewMultiItemsDarkSettingsScreen() {
+fun PreviewMultiItemsDarkSettingsScreenAnimated() {
     ArsenalBasicTheme(useDarkTheme = true) {
         val viewModel = SettingsViewModel().apply {
             items.value = mutableListOf(
