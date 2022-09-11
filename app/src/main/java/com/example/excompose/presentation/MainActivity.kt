@@ -6,8 +6,11 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,7 +28,9 @@ import com.example.excompose.presentation.ui.components.SearchableTopbar
 import com.example.excompose.presentation.ui.components.SettingsScreen
 import com.example.excompose.presentation.ui.components.SettingsScreenAnimated
 import com.example.excompose.presentation.ui.components.SettingsViewModel
+import com.example.excompose.presentation.ui.components.SimpleCard
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
+import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
 import com.example.excompose.presentation.viewModel.ObserveStateViewModel
 import com.example.excompose.presentation.viewModel.SavableViewModel
 
@@ -44,11 +49,11 @@ class MainActivity : ComponentActivity() {
                 //WelcomeView(this, viewModel)
                 //ComplexNavigationGraph()
                 //StateView(saveableViewModel)
-                //                LazyColumnScreen()
-                //                LazyColumnAnimatedScreen()
+                //LazyColumnScreen()
+                //LazyColumnAnimatedScreen()
                 //SearcheableTopBarScreen(searchViewModel)
                 //ProfileImageScreen()
-                ProfileImageScreenRow()
+                SimpleCardPreviewSreen()
             }
         }
     }
@@ -58,20 +63,37 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
     ArsenalBasicTheme {
-        //WelcomeView(this, viewModel)
-        //ComplexNavigationGraph()
-        //StateView(saveableViewModel)
-        //                LazyColumnScreen()
-        //                LazyColumnAnimatedScreen()
-        //SearcheableTopBarScreen(searchViewModel)
-        //ProfileImageScreen()
-        ProfileImageScreenRow()
+        Column(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.onPrimary)
+        ){
+            SimpleCardPreviewSreen()
+            ProfileImageScreenRow()
+            ProfileImageScreen()
+            //WelcomeView(this, viewModel)
+            ComplexNavigationGraph()
+            //StateView(saveableViewModel)
+            LazyColumnScreen()
+            LazyColumnAnimatedScreen()
+            //SearcheableTopBarScreen(searchViewModel)
+        }
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+
 @Composable
-fun ProfileImageScreenRow(){
+fun SimpleCardPreviewSreen() {
+    ArsenalBasicTheme {
+        SimpleCard(
+            text = R.string.wellcome,
+            drawable = R.drawable.marvel_logo,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+@Composable
+fun ProfileImageScreenRow() {
     ArsenalBasicTheme {
         ProfileRow(
             rowData = listOf(
