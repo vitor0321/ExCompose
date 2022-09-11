@@ -6,13 +6,20 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import com.example.excompose.R
 import com.example.excompose.presentation.navigation.RootNavigationGraph
 import com.example.excompose.presentation.ui.components.Item
+import com.example.excompose.presentation.ui.components.ProfileImage
+import com.example.excompose.presentation.ui.components.ProfileImageItem
+import com.example.excompose.presentation.ui.components.ProfileRow
 import com.example.excompose.presentation.ui.components.SearchViewModel
 import com.example.excompose.presentation.ui.components.SearchableTopbar
 import com.example.excompose.presentation.ui.components.SettingsScreen
@@ -39,7 +46,9 @@ class MainActivity : ComponentActivity() {
                 //StateView(saveableViewModel)
                 //                LazyColumnScreen()
                 //                LazyColumnAnimatedScreen()
-                SearcheableTopBarScreen(searchViewModel)
+                //SearcheableTopBarScreen(searchViewModel)
+                //ProfileImageScreen()
+                ProfileImageScreenRow()
             }
         }
     }
@@ -49,7 +58,44 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainPreview() {
     ArsenalBasicTheme {
-        ComplexNavigationGraph()
+        //WelcomeView(this, viewModel)
+        //ComplexNavigationGraph()
+        //StateView(saveableViewModel)
+        //                LazyColumnScreen()
+        //                LazyColumnAnimatedScreen()
+        //SearcheableTopBarScreen(searchViewModel)
+        //ProfileImageScreen()
+        ProfileImageScreenRow()
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun ProfileImageScreenRow(){
+    ArsenalBasicTheme {
+        ProfileRow(
+            rowData = listOf(
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 1),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 2),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 3),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 4),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 5),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 6),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 7),
+                ProfileImageItem(R.drawable.marvel_logo, R.string.wellcome, 8),
+            ),
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
+
+@Composable
+fun ProfileImageScreen(){
+    ArsenalBasicTheme {
+        ProfileImage(
+            R.drawable.marvel_logo,
+            R.string.wellcome,
+            modifier = Modifier.padding(8.dp))
     }
 }
 
