@@ -1,29 +1,34 @@
 package com.example.excompose.presentation
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.excompose.R
 import com.example.excompose.presentation.navigation.RootNavigationGraph
+import com.example.excompose.presentation.ui.FakeContent
 import com.example.excompose.presentation.ui.components.*
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
-import com.example.excompose.presentation.ui.theme.ArsenalThemeExtended
 import com.example.excompose.presentation.viewModel.ObserveStateViewModel
 import com.example.excompose.presentation.viewModel.SavableViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
@@ -45,7 +50,9 @@ class MainActivity : ComponentActivity() {
                 //SearcheableTopBarScreen(searchViewModel)
                 //ProfileImageScreen()
                 //SimpleCardPreviewSreen()
-                BottomNavScreen()
+                //BottomNavScreen()
+                //SplashScreen()
+                DrawerScreen()
             }
         }
     }
@@ -69,6 +76,54 @@ fun MainPreview() {
             LazyColumnScreen()
             LazyColumnAnimatedScreen()
             //SearcheableTopBarScreen(searchViewModel)
+        }
+    }
+}
+
+private fun showSelection(context: Context, selectionId: Int) {
+    Toast.makeText(context, "Cliquei: $selectionId", Toast.LENGTH_SHORT).show()
+}
+
+@Composable
+fun DrawerScreen() {
+    ArsenalBasicTheme {
+        val scaffoldState = rememberScaffoldState()
+        Scaffold(
+            scaffoldState = scaffoldState,
+            modifier = Modifier.statusBarsPadding(),
+            drawerContent = {
+                Drawer(onClick = ::showSelection)
+            }
+        ) { padding ->
+            val scope = rememberCoroutineScope()
+            FakeContent(
+                modifier = Modifier.padding(padding),
+                onClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun SplashScreen() {
+    ArsenalBasicTheme {
+        Surface(
+            color = MaterialTheme.colorScheme.primary
+        ) {
+            var showLandingScreen by remember { mutableStateOf(true) }
+            if (showLandingScreen) {
+                LandingScreen(
+                    modifier = Modifier,
+                    splashWaitTime = 1_500L,
+                    onTimeOut = { showLandingScreen = false }
+                )
+            } else {
+                BottomNavScreen()
+            }
         }
     }
 }
