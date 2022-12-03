@@ -16,7 +16,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +29,23 @@ import androidx.navigation.compose.rememberNavController
 import com.example.excompose.R
 import com.example.excompose.presentation.navigation.RootNavigationGraph
 import com.example.excompose.presentation.ui.FakeContent
-import com.example.excompose.presentation.ui.components.*
+import com.example.excompose.presentation.ui.components.BottomNav
+import com.example.excompose.presentation.ui.components.Drawer
+import com.example.excompose.presentation.ui.components.FullScreenMessageWithSaveable
+import com.example.excompose.presentation.ui.components.FullScreenMessageWithState
+import com.example.excompose.presentation.ui.components.HomeContent
+import com.example.excompose.presentation.ui.components.Item
+import com.example.excompose.presentation.ui.components.LandingScreen
+import com.example.excompose.presentation.ui.components.ProfileImage
+import com.example.excompose.presentation.ui.components.ProfileImageItem
+import com.example.excompose.presentation.ui.components.ProfileRow
+import com.example.excompose.presentation.ui.components.SearchViewModel
+import com.example.excompose.presentation.ui.components.SearchableTopbar
+import com.example.excompose.presentation.ui.components.SettingsScreen
+import com.example.excompose.presentation.ui.components.SettingsScreenAnimated
+import com.example.excompose.presentation.ui.components.SettingsViewModel
+import com.example.excompose.presentation.ui.components.SimpleCard
+import com.example.excompose.presentation.ui.components.SimpleCardItem
 import com.example.excompose.presentation.ui.theme.ArsenalBasicTheme
 import com.example.excompose.presentation.viewModel.ObserveStateViewModel
 import com.example.excompose.presentation.viewModel.SavableViewModel
@@ -52,7 +73,24 @@ class MainActivity : ComponentActivity() {
                 //SimpleCardPreviewSreen()
                 //BottomNavScreen()
                 //SplashScreen()
-                DrawerScreen()
+//                DrawerScreen()
+//                FullScreenMessage(title = "Titulo", message = "message", bottomButtonText ="Button" )
+//                FullScreenMessageWithState(
+//                    title = "titulo",
+//                    message = "message",
+//                    bottomButtonText = "bottom",
+//                    bottomButtonAction = {
+//                        Toast.makeText(this, "Salvar registro novamente", Toast.LENGTH_SHORT).show()
+//                    }
+//                )
+                FullScreenMessageWithSaveable(
+                    title = "titulo",
+                    message = "message",
+                    bottomButtonText = "bottom",
+                    bottomButtonAction = {
+                        Toast.makeText(this, "Salvar registro novamente", Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
         }
     }
@@ -76,6 +114,11 @@ fun MainPreview() {
             LazyColumnScreen()
             LazyColumnAnimatedScreen()
             //SearcheableTopBarScreen(searchViewModel)
+            FullScreenMessageWithState(
+                title = "titulo",
+                message = "message",
+                bottomButtonText = "bottom"
+            )
         }
     }
 }
